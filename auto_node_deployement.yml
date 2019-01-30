@@ -5,7 +5,7 @@
   - name: Installing epel repositories.  
     command: yum install epel-release -y
 
-# ASSUMPTION -: tarball of source_code is already present on node server.
+# ASSUMPTION -: tarball of source_code is already present on node server with the name "abhikeliye_nodecode.tar".
 
 
   - name: Installing epel*, git, nodejs, npm.
@@ -15,6 +15,13 @@
 
   - name: Unziping software-I
     command: "cd /root/"
+
+#   uncomment these after checking.
+#   - name: gitting software
+#     command: git clone https://github.com/FlyingDutchman99/Ansible_NGINX_nodejs_websever.git
+
+#   - name: extracting software
+#     command: npm install --save
 
   - name: Unzipping Software-II
     command: tar -xvjf abhikeliye_nodecode.tar
