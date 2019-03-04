@@ -1,0 +1,19 @@
+
+
+- name: CREATING A REVERSE-PROXY WEB-SERVER.
+  hosts: ubuntu_nginx 
+  tasks:
+  - name: Installing NGINX BIATCH.
+    command: 'apt install nginx -y'
+#															// Risky buisness: Remeber to change IP in conf file, for both app and web.
+  - name: CONFIGURING NGINX BIAAATCH...
+    copy:
+           src: "./ubuntu_nginx.conf"
+           dest: "/etc/nginx/nginx.conf"
+           owner: root
+           group: root
+
+  - name: INITIATING WEB_SERVER BIAAAAATCH.......
+    command: "nginx -c /etc/nginx/nginx.conf"
+
+

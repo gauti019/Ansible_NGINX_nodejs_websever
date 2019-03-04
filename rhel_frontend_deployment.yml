@@ -1,0 +1,44 @@
+---
+- name: Installing necessary packages.
+  hosts:  rhel_angular
+  tasks:
+  - name: Installing epel repositories.  
+    command: yum install epel-release -y
+
+  - name: Installing dependencies for nodeJS server.
+    yum:                                                    # for apt: build-essentials
+        name:  git, bzip2, curl, gcc-c++, make
+        state: present
+
+  - name: copying repo.
+    copy:
+        src: ./rpm_run.sh
+        dest: /root/run.sh
+
+  - name: Installing nodeJS using curl PART-I
+    command: "{{ item }}"
+    with_items:
+              - "bash /root/run.sh >> /root/cat.sh"
+              - "bash /root/run.sh"
+              - "yum install -y nodejs"
+
+  - name: getting application
+    shell: "git clone https://github.com/gauti019/angular-frontend.git"
+    args:
+      chdir: /root/
+
+  - name: going deep into app-code and extracting it.
+    shell: tar -xvf frontend_admin.tar.xz
+    args:
+      chdir: /root/angular-frontend/
+
+  - name: Installing package.json LIBRARIES.
+    npm:
+       path: /root/angular-frontend/frontend_admin/
+
+  - name:  creating Production build for angular app.
+    shell: "npm run start:prod"
+    args:
+      chdir: "/root/angular-frontend/"
+
+

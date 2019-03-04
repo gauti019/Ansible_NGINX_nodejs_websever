@@ -1,0 +1,27 @@
+
+
+- name: CREATING A REVERSE-PROXY WEB-SERVER.
+  hosts: rhel_nginx 
+  tasks:
+  - name: Instaling epel-release.
+    yum:
+        name: "epel-release"
+        state: present
+
+  - name: Installing NGINX BIATCH.
+    yum:
+        name: nginx
+        state: present
+
+#															// Risky buisness: Remeber to change IP in conf file, for both app and web.
+  - name: CONFIGURING NGINX BIAAATCH...
+    copy:
+           src: "./rhel_nginx.conf"
+           dest: "/etc/nginx/nginx.conf"
+           owner: root
+           group: root
+
+  - name: INITIATING WEB_SERVER BIAAAAATCH.......
+    command: "nginx -c /etc/nginx/nginx.conf"
+
+

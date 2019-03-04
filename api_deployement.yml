@@ -1,0 +1,98 @@
+---
+- name: Installing necessary packages.
+  hosts: node2
+  tasks:
+  - name: Installing epel repositories.  
+    command: yum install epel-release -y
+
+# ASSUMPTION -: tarball of source_code is already present on node server with the name "abhikeliye_nodecode.tar".
+
+
+  - name: Installing epel*, git, nodejs, npm.
+    yum:
+        name:  git, nodejs, npm, bzip2 
+        state: present
+
+  - name: reaching to the place. [ /root/ ]
+    command: "cd /root/"
+
+  - name: getting application
+    command: "git clone https://github.com/gauti019/login-backend.git"
+
+#   uncomment these after checking.
+#   - name: gitting software
+#     command: git clone https://github.com/FlyingDutchman99/Ansible_NGINX_nodejs_websever.git
+
+#   - name: extracting software
+#     command: npm install --save
+
+  - name: going deep into app-code.
+    shell: tar -xvf api.tar
+    args:
+      chdir: /root/login-backend/
+
+
+  - name: Installing package.json LIBRARIES.
+    npm:
+        path: /root/login-backend
+
+  - name: Instaling pm2 latest.
+    npm:
+        name: pm2
+        state: latest 
+        global: yes
+
+  - name: not CREATING SYSTEM DEAMON FOR NODE APPLICATION
+    command: pm2 start /root/login-backend/server.js
+
+#-----------------------------------------------------------
+
+---
+- name: Installing necessary packages.
+  hosts: node2
+  tasks:
+  - name: Installing epel repositories.  
+    command: yum install epel-release -y
+
+# ASSUMPTION -: tarball of source_code is already present on node server with the name "abhikeliye_nodecode.tar".
+
+
+  - name: Installing epel*, git, nodejs, npm.
+    yum:
+        name:  git, nodejs, npm, bzip2 
+        state: present
+
+  - name: reaching to the place. [ /root/ ]
+    command: "cd /root/"
+
+  - name: getting application
+    command: "git clone https://github.com/gauti019/login-backend.git"
+
+#   uncomment these after checking.
+#   - name: gitting software
+#     command: git clone https://github.com/FlyingDutchman99/Ansible_NGINX_nodejs_websever.git
+
+#   - name: extracting software
+#     command: npm install --save
+
+  - name: going deep into app-code.
+    shell: tar -xvf api.tar
+    args:
+      chdir: /root/login-backend/
+
+
+  - name: Installing package.json LIBRARIES.
+    npm:
+        path: /root/login-backend
+
+  - name: Instaling pm2 latest.
+    npm:
+        name: pm2
+        state: latest 
+        global: yes
+
+  - name: not CREATING SYSTEM DEAMON FOR NODE APPLICATION
+    command: pm2 start /root/login-backend/server.js
+
+#-----------------------------------------------------------
+
